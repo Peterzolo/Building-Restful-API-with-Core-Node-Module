@@ -3,15 +3,24 @@ const url = require('url');
 const stringDecorder = require('string_decoder').StringDecoder;
 
 const config = require('./config');
+
 const _data = require('./lib/data');
 
+// _data.delete('test','newFile',function(err) {
+// 	console.log('This is the response :', err);
+// });
 
+// _data.update('test','newFile',{'firstName' : 'James'}, function(err) {
+// 	console.log('This is the response :', err);
+// });
 
+// _data.read('test', 'newFile', function(err, data) {
+// 	console.log('This is the response :', err, ': ' + 'and this is the :', data);
+// });
 
-_data.create('test','newFile',{'Write' : 'Read'}, function(err){
-    console.log('This is the response with', err)
-
-})
+_data.create('test', 'newFile', { 'First name': 'Jerry' }, function(err) {
+	console.log('This is the response with', err);
+});
 
 const server = http.createServer((req, res) => {
 	const parseUrl = url.parse(req.url, true);
@@ -78,5 +87,5 @@ handlers.notFound = function(data, callback) {
 };
 
 let router = {
-	'ping': handlers.ping
+	ping: handlers.ping
 };
