@@ -2,6 +2,8 @@ const http = require('http');
 const url = require('url');
 const stringDecorder = require('string_decoder').StringDecoder;
 
+const config = require('./config');
+
 const server = http.createServer((req, res) => {
 	const parseUrl = url.parse(req.url, true);
 
@@ -44,6 +46,7 @@ const server = http.createServer((req, res) => {
 
 		const payloadString = JSON.stringify(payload);
 
+		res.setHeader('Content-type', 'application/json');
 		res.writeHead(statusCode);
 		res.end(payloadString);
 
@@ -53,12 +56,12 @@ const server = http.createServer((req, res) => {
 
 const Port = 5000;
 
-server.listen(Port, () => console.log(`Server is running on port ${Port}`));
+server.listen(config.port, () => console.log(`Server is running on port ${config.port} in ${config.envName} mode`));
 
 let handlers = {};
 
 handlers.sample = function(data, callback) {
-	callback(406, { 'name': 'sample-handler' });
+	callback(406, { name: 'sample-handler' });
 };
 
 handlers.notFound = function(data, callback) {
