@@ -3,6 +3,15 @@ const url = require('url');
 const stringDecorder = require('string_decoder').StringDecoder;
 
 const config = require('./config');
+const _data = require('./lib/data');
+
+
+
+
+_data.create('test','newFile',{'Write' : 'Read'}, function(err){
+    console.log('This is the response with', err)
+
+})
 
 const server = http.createServer((req, res) => {
 	const parseUrl = url.parse(req.url, true);
@@ -60,8 +69,8 @@ server.listen(config.port, () => console.log(`Server is running on port ${config
 
 let handlers = {};
 
-handlers.sample = function(data, callback) {
-	callback(406, { name: 'sample-handler' });
+handlers.ping = function(data, callback) {
+	callback(200);
 };
 
 handlers.notFound = function(data, callback) {
@@ -69,5 +78,5 @@ handlers.notFound = function(data, callback) {
 };
 
 let router = {
-	sample: handlers.sample
+	'ping': handlers.ping
 };
